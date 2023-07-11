@@ -1,0 +1,684 @@
+\documentclass{article}
+ 
+\usepackage{mathtools}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[russian]{babel}
+\usepackage{titling}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{tikz-inet}
+\usepackage{graphicx}
+\usetikzlibrary{matrix,shapes}
+\usetikzlibrary {arrows.meta,graphs,graphdrawing}
+\usetikzlibrary {circuits.logic.IEC}
+\usetikzlibrary{positioning}
+\usepackage{amssymb}
+\usepackage{longtable}
+\usepackage{karnaugh-map}
+\usepackage{breqn}
+\usepackage[pdf]{graphviz}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=1cm,footskip=.5cm]{geometry}
+\usepackage{dot2texi}
+\usepackage{tikz}
+
+\usepackage{fontspec}
+\setmainfont{CMU Serif}
+\setsansfont{CMU Sans Serif}
+\setmonofont{CMU Typewriter Text}
+
+\newcommand{\tikzmark}[2]{\tikz[overlay,remember picture,baseline] 
+\node [anchor=base] (#1) {$#2$};}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=0pt] (char) {#1};}}
+
+\newcommand*{\carry}[1][1]{\overset{#1}}
+\newcolumntype{B}[1]{r*{#1}{@{\,}r}}
+
+\usepackage{enumitem}
+\makeatletter
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ}
+\makeatother
+
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1em}
+\setlength{\fboxsep}{1pt}
+
+\newcommand{\DrawVLine}[3][]{%
+  \begin{tikzpicture}[overlay,remember picture]
+    \draw[shorten <=0.3ex, #1] (#2.north) -- (#3.south);
+  \end{tikzpicture}
+}
+
+\begin{document}
+
+\begin{center}
+    УНИВЕРСИТЕТ ИТМО \\
+    Факультет программной инженерии и компьютерной техники \\
+    Дисциплина «Дискретная математика»
+    
+    \vspace{5cm}
+
+    \large
+    \textbf{Курсовая работа} \\
+    Часть 1 \\
+    Вариант 5
+\end{center}
+
+\vspace{2cm}
+
+\hfill\begin{minipage}{0.35\linewidth}
+Студент \\
+XXX XXX XXX \\
+P31XX \\
+
+Преподаватель \\
+Поляков Владимир Иванович
+\end{minipage}
+
+\vfill
+
+\begin{center}
+    Санкт-Петербург, 2023 г.
+\end{center}
+
+\thispagestyle{empty}
+\newpage
+
+Функция $f(x_1, x_2, x_3, x_4, x_5)$ принимает значение 1 при $2 < |x_2 x_1 0 - x_3 x_4 x_5| \le 5$ и неопределенное значение при $|x_2 x_1 0 - x_3 x_4 x_5| = 1$
+\section*{Таблица истинности}
+\begin{center}\begin{tabular}{|c|ccccc|c*{5}{|c}|}
+    \hline
+    № & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$  & $ x_2  x_1 0$ & $ x_3  x_4  x_5 $ & $ x_2  x_1 0$ & $ x_3  x_4  x_5 $& $f$ \\ \hline
+    0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+    1 & 0 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 1 & d \\ \hline
+    2 & 0 & 0 & 0 & 1 & 0 & 0 & 2 & 0 & 2 & 0 \\ \hline
+    3 & 0 & 0 & 0 & 1 & 1 & 0 & 3 & 0 & 3 & 1 \\ \hline
+    4 & 0 & 0 & 1 & 0 & 0 & 0 & 4 & 0 & 4 & 1 \\ \hline
+    5 & 0 & 0 & 1 & 0 & 1 & 0 & 5 & 0 & 5 & 1 \\ \hline
+    6 & 0 & 0 & 1 & 1 & 0 & 0 & 6 & 0 & 6 & 0 \\ \hline
+    7 & 0 & 0 & 1 & 1 & 1 & 0 & 7 & 0 & 7 & 0 \\ \hline
+    8 & 0 & 1 & 0 & 0 & 0 & 4 & 0 & 4 & 0 & 1 \\ \hline
+    9 & 0 & 1 & 0 & 0 & 1 & 4 & 1 & 4 & 1 & 1 \\ \hline
+    10 & 0 & 1 & 0 & 1 & 0 & 4 & 2 & 4 & 2 & 0 \\ \hline
+    11 & 0 & 1 & 0 & 1 & 1 & 4 & 3 & 4 & 3 & d \\ \hline
+    12 & 0 & 1 & 1 & 0 & 0 & 4 & 4 & 4 & 4 & 0 \\ \hline
+    13 & 0 & 1 & 1 & 0 & 1 & 4 & 5 & 4 & 5 & d \\ \hline
+    14 & 0 & 1 & 1 & 1 & 0 & 4 & 6 & 4 & 6 & 0 \\ \hline
+    15 & 0 & 1 & 1 & 1 & 1 & 4 & 7 & 4 & 7 & 1 \\ \hline
+    16 & 1 & 0 & 0 & 0 & 0 & 2 & 0 & 2 & 0 & 0 \\ \hline
+    17 & 1 & 0 & 0 & 0 & 1 & 2 & 1 & 2 & 1 & d \\ \hline
+    18 & 1 & 0 & 0 & 1 & 0 & 2 & 2 & 2 & 2 & 0 \\ \hline
+    19 & 1 & 0 & 0 & 1 & 1 & 2 & 3 & 2 & 3 & d \\ \hline
+    20 & 1 & 0 & 1 & 0 & 0 & 2 & 4 & 2 & 4 & 0 \\ \hline
+    21 & 1 & 0 & 1 & 0 & 1 & 2 & 5 & 2 & 5 & 1 \\ \hline
+    22 & 1 & 0 & 1 & 1 & 0 & 2 & 6 & 2 & 6 & 1 \\ \hline
+    23 & 1 & 0 & 1 & 1 & 1 & 2 & 7 & 2 & 7 & 1 \\ \hline
+    24 & 1 & 1 & 0 & 0 & 0 & 6 & 0 & 6 & 0 & 0 \\ \hline
+    25 & 1 & 1 & 0 & 0 & 1 & 6 & 1 & 6 & 1 & 1 \\ \hline
+    26 & 1 & 1 & 0 & 1 & 0 & 6 & 2 & 6 & 2 & 1 \\ \hline
+    27 & 1 & 1 & 0 & 1 & 1 & 6 & 3 & 6 & 3 & 1 \\ \hline
+    28 & 1 & 1 & 1 & 0 & 0 & 6 & 4 & 6 & 4 & 0 \\ \hline
+    29 & 1 & 1 & 1 & 0 & 1 & 6 & 5 & 6 & 5 & d \\ \hline
+    30 & 1 & 1 & 1 & 1 & 0 & 6 & 6 & 6 & 6 & 0 \\ \hline
+    31 & 1 & 1 & 1 & 1 & 1 & 6 & 7 & 6 & 7 & d \\ \hline
+\end{tabular}\end{center}
+\section*{Аналитический вид}
+\subsection*{Каноническая ДНФ:}
+\begin{align*}
+f =\: &\overline{x_{1}} \, \overline{x_{2}} \, \overline{x_{3}} \, x_{4} \, x_{5}\lor \overline{x_{1}} \, \overline{x_{2}} \, x_{3} \, \overline{x_{4}} \, \overline{x_{5}}\lor \overline{x_{1}} \, \overline{x_{2}} \, x_{3} \, \overline{x_{4}} \, x_{5}\lor \overline{x_{1}} \, x_{2} \, \overline{x_{3}} \, \overline{x_{4}} \, \overline{x_{5}}\lor \overline{x_{1}} \, x_{2} \, \overline{x_{3}} \, \overline{x_{4}} \, x_{5}\lor \overline{x_{1}} \, x_{2} \, x_{3} \, x_{4} \, x_{5}\lor \\ \lor\: &x_{1} \, \overline{x_{2}} \, x_{3} \, \overline{x_{4}} \, x_{5}\lor x_{1} \, \overline{x_{2}} \, x_{3} \, x_{4} \, \overline{x_{5}}\lor x_{1} \, \overline{x_{2}} \, x_{3} \, x_{4} \, x_{5}\lor x_{1} \, x_{2} \, \overline{x_{3}} \, \overline{x_{4}} \, x_{5}\lor x_{1} \, x_{2} \, \overline{x_{3}} \, x_{4} \, \overline{x_{5}}\lor x_{1} \, x_{2} \, \overline{x_{3}} \, x_{4} \, x_{5}\end{align*}
+\subsection*{Каноническая КНФ:}
+\begin{align*}
+f =\: &\left(x_{1} \lor x_{2} \lor x_{3} \lor x_{4} \lor x_{5}\right)\left(x_{1} \lor x_{2} \lor x_{3} \lor \overline{x_{4}} \lor x_{5}\right)\left(x_{1} \lor x_{2} \lor \overline{x_{3}} \lor \overline{x_{4}} \lor x_{5}\right)\left(x_{1} \lor x_{2} \lor \overline{x_{3}} \lor \overline{x_{4}} \lor \overline{x_{5}}\right)\\&\left(x_{1} \lor \overline{x_{2}} \lor x_{3} \lor \overline{x_{4}} \lor x_{5}\right)\left(x_{1} \lor \overline{x_{2}} \lor \overline{x_{3}} \lor x_{4} \lor x_{5}\right)\left(x_{1} \lor \overline{x_{2}} \lor \overline{x_{3}} \lor \overline{x_{4}} \lor x_{5}\right)\left(\overline{x_{1}} \lor x_{2} \lor x_{3} \lor x_{4} \lor x_{5}\right)\\&\left(\overline{x_{1}} \lor x_{2} \lor x_{3} \lor \overline{x_{4}} \lor x_{5}\right)\left(\overline{x_{1}} \lor x_{2} \lor \overline{x_{3}} \lor x_{4} \lor x_{5}\right)\left(\overline{x_{1}} \lor \overline{x_{2}} \lor x_{3} \lor x_{4} \lor x_{5}\right)\left(\overline{x_{1}} \lor \overline{x_{2}} \lor \overline{x_{3}} \lor x_{4} \lor x_{5}\right)\\&\left(\overline{x_{1}} \lor \overline{x_{2}} \lor \overline{x_{3}} \lor \overline{x_{4}} \lor x_{5}\right)\end{align*}
+\section*{Минимизация булевой функции методом Квайна--Мак-Класки}
+\subsection*{Кубы различной размерности и простые импликанты}
+\begin{center}
+\begin{tabular}[t]{|lcc|}
+\hline \multicolumn{3}{|c|}{$K^0(f)$}\\ \hline
+$m_{4}$ & 00100& \checkmark \\$m_{8}$ & 01000& \checkmark \\$m_{1}$ & 00001& \checkmark \\\hline
+$m_{3}$ & 00011& \checkmark \\$m_{5}$ & 00101& \checkmark \\$m_{9}$ & 01001& \checkmark \\$m_{17}$ & 10001& \checkmark \\\hline
+$m_{21}$ & 10101& \checkmark \\$m_{22}$ & 10110& \checkmark \\$m_{25}$ & 11001& \checkmark \\$m_{26}$ & 11010& \checkmark \\$m_{11}$ & 01011& \checkmark \\$m_{13}$ & 01101& \checkmark \\$m_{19}$ & 10011& \checkmark \\\hline
+$m_{15}$ & 01111& \checkmark \\$m_{23}$ & 10111& \checkmark \\$m_{27}$ & 11011& \checkmark \\$m_{29}$ & 11101& \checkmark \\\hline
+$m_{31}$ & 11111& \checkmark \\\hline
+\end{tabular}
+\begin{tabular}[t]{|lcc|}
+\hline \multicolumn{3}{|c|}{$K^1(f)$}\\ \hline
+$m_{1}\mbox{-}m_{3}$ & 000X1& \checkmark \\$m_{4}\mbox{-}m_{5}$ & 0010X& \\$m_{1}\mbox{-}m_{5}$ & 00X01& \checkmark \\$m_{8}\mbox{-}m_{9}$ & 0100X& \\$m_{1}\mbox{-}m_{9}$ & 0X001& \checkmark \\$m_{1}\mbox{-}m_{17}$ & X0001& \checkmark \\\hline
+$m_{9}\mbox{-}m_{11}$ & 010X1& \checkmark \\$m_{9}\mbox{-}m_{13}$ & 01X01& \checkmark \\$m_{3}\mbox{-}m_{11}$ & 0X011& \checkmark \\$m_{5}\mbox{-}m_{13}$ & 0X101& \checkmark \\$m_{17}\mbox{-}m_{19}$ & 100X1& \checkmark \\$m_{17}\mbox{-}m_{21}$ & 10X01& \checkmark \\$m_{17}\mbox{-}m_{25}$ & 1X001& \checkmark \\$m_{3}\mbox{-}m_{19}$ & X0011& \checkmark \\$m_{5}\mbox{-}m_{21}$ & X0101& \checkmark \\$m_{9}\mbox{-}m_{25}$ & X1001& \checkmark \\\hline
+$m_{13}\mbox{-}m_{15}$ & 011X1& \checkmark \\$m_{11}\mbox{-}m_{15}$ & 01X11& \checkmark \\$m_{22}\mbox{-}m_{23}$ & 1011X& \\$m_{21}\mbox{-}m_{23}$ & 101X1& \checkmark \\$m_{19}\mbox{-}m_{23}$ & 10X11& \checkmark \\$m_{26}\mbox{-}m_{27}$ & 1101X& \\$m_{25}\mbox{-}m_{27}$ & 110X1& \checkmark \\$m_{25}\mbox{-}m_{29}$ & 11X01& \checkmark \\$m_{19}\mbox{-}m_{27}$ & 1X011& \checkmark \\$m_{21}\mbox{-}m_{29}$ & 1X101& \checkmark \\$m_{11}\mbox{-}m_{27}$ & X1011& \checkmark \\$m_{13}\mbox{-}m_{29}$ & X1101& \checkmark \\\hline
+$m_{29}\mbox{-}m_{31}$ & 111X1& \checkmark \\$m_{27}\mbox{-}m_{31}$ & 11X11& \checkmark \\$m_{23}\mbox{-}m_{31}$ & 1X111& \checkmark \\$m_{15}\mbox{-}m_{31}$ & X1111& \checkmark \\\hline
+\end{tabular}
+\begin{tabular}[t]{|lcc|}
+\hline \multicolumn{3}{|c|}{$K^2(f)$}\\ \hline
+$m_{1}\mbox{-}m_{3}\mbox{-}m_{9}\mbox{-}m_{11}$ & 0X0X1& \checkmark \\$m_{1}\mbox{-}m_{5}\mbox{-}m_{9}\mbox{-}m_{13}$ & 0XX01& \checkmark \\$m_{1}\mbox{-}m_{3}\mbox{-}m_{17}\mbox{-}m_{19}$ & X00X1& \checkmark \\$m_{1}\mbox{-}m_{5}\mbox{-}m_{17}\mbox{-}m_{21}$ & X0X01& \checkmark \\$m_{1}\mbox{-}m_{9}\mbox{-}m_{17}\mbox{-}m_{25}$ & XX001& \checkmark \\\hline
+$m_{9}\mbox{-}m_{11}\mbox{-}m_{13}\mbox{-}m_{15}$ & 01XX1& \checkmark \\$m_{17}\mbox{-}m_{19}\mbox{-}m_{21}\mbox{-}m_{23}$ & 10XX1& \checkmark \\$m_{17}\mbox{-}m_{19}\mbox{-}m_{25}\mbox{-}m_{27}$ & 1X0X1& \checkmark \\$m_{17}\mbox{-}m_{21}\mbox{-}m_{25}\mbox{-}m_{29}$ & 1XX01& \checkmark \\$m_{9}\mbox{-}m_{11}\mbox{-}m_{25}\mbox{-}m_{27}$ & X10X1& \checkmark \\$m_{9}\mbox{-}m_{13}\mbox{-}m_{25}\mbox{-}m_{29}$ & X1X01& \checkmark \\$m_{3}\mbox{-}m_{11}\mbox{-}m_{19}\mbox{-}m_{27}$ & XX011& \checkmark \\$m_{5}\mbox{-}m_{13}\mbox{-}m_{21}\mbox{-}m_{29}$ & XX101& \checkmark \\\hline
+$m_{25}\mbox{-}m_{27}\mbox{-}m_{29}\mbox{-}m_{31}$ & 11XX1& \checkmark \\$m_{21}\mbox{-}m_{23}\mbox{-}m_{29}\mbox{-}m_{31}$ & 1X1X1& \checkmark \\$m_{19}\mbox{-}m_{23}\mbox{-}m_{27}\mbox{-}m_{31}$ & 1XX11& \checkmark \\$m_{13}\mbox{-}m_{15}\mbox{-}m_{29}\mbox{-}m_{31}$ & X11X1& \checkmark \\$m_{11}\mbox{-}m_{15}\mbox{-}m_{27}\mbox{-}m_{31}$ & X1X11& \checkmark \\\hline
+\end{tabular}
+\begin{tabular}[t]{|lcc|}
+\hline \multicolumn{3}{|c|}{$K^3(f)$}\\ \hline
+$m_{1}\mbox{-}m_{3}\mbox{-}m_{9}\mbox{-}m_{11}\mbox{-}m_{17}\mbox{-}m_{19}\mbox{-}m_{25}\mbox{-}m_{27}$ & XX0X1& \\$m_{1}\mbox{-}m_{5}\mbox{-}m_{9}\mbox{-}m_{13}\mbox{-}m_{17}\mbox{-}m_{21}\mbox{-}m_{25}\mbox{-}m_{29}$ & XXX01& \\\hline
+$m_{17}\mbox{-}m_{19}\mbox{-}m_{21}\mbox{-}m_{23}\mbox{-}m_{25}\mbox{-}m_{27}\mbox{-}m_{29}\mbox{-}m_{31}$ & 1XXX1& \\$m_{9}\mbox{-}m_{11}\mbox{-}m_{13}\mbox{-}m_{15}\mbox{-}m_{25}\mbox{-}m_{27}\mbox{-}m_{29}\mbox{-}m_{31}$ & X1XX1& \\\hline
+\end{tabular}
+\begin{tabular}[t]{|c|}
+\hline $Z(f)$ \\ \hline
+0010X\\
+0100X\\
+1011X\\
+1101X\\
+XX0X1\\
+XXX01\\
+1XXX1\\
+X1XX1\\
+\hline \end{tabular}
+\end{center}
+\subsection*{Таблица импликант}
+Вычеркнем строки, соответствующие существенным импликантам (это те, которые покрывают вершины, не покрытые другими импликантами), а также столбцы, соответствующие вершинам, покрываемым существенными импликантами. Затем вычеркнем импликанты, не покрывающие ни одной вершины.
+\begin{flushleft}\begin{tabular}{|c|c|r*{12}{|c}|}
+    \hline \multicolumn{2}{|c|}{\multirow{7}{*}{Простые импликанты}} & \multicolumn{12}{c|}{0-кубы} \\ \cline{3-14}
+    \multicolumn{2}{|c|}{} & \makecell{\tikzmark{start_0}{0}} & \makecell{\tikzmark{start_1}{0}} & \makecell{\tikzmark{start_2}{0}} & \makecell{\tikzmark{start_3}{0}} & \makecell{\tikzmark{start_4}{0}} & \makecell{\tikzmark{start_5}{0}} & \makecell{\tikzmark{start_6}{1}} & \makecell{\tikzmark{start_7}{1}} & \makecell{\tikzmark{start_8}{1}} & \makecell{\tikzmark{start_9}{1}} & \makecell{\tikzmark{start_10}{1}} & \makecell{\tikzmark{start_11}{1}}\\
+    \multicolumn{2}{|c|}{} & \makecell{0} & \makecell{0} & \makecell{0} & \makecell{1} & \makecell{1} & \makecell{1} & \makecell{0} & \makecell{0} & \makecell{0} & \makecell{1} & \makecell{1} & \makecell{1}\\
+    \multicolumn{2}{|c|}{} & \makecell{0} & \makecell{1} & \makecell{1} & \makecell{0} & \makecell{0} & \makecell{1} & \makecell{1} & \makecell{1} & \makecell{1} & \makecell{0} & \makecell{0} & \makecell{0}\\
+    \multicolumn{2}{|c|}{} & \makecell{1} & \makecell{0} & \makecell{0} & \makecell{0} & \makecell{0} & \makecell{1} & \makecell{0} & \makecell{1} & \makecell{1} & \makecell{0} & \makecell{1} & \makecell{1}\\
+    \multicolumn{2}{|c|}{} & \makecell{1} & \makecell{0} & \makecell{1} & \makecell{0} & \makecell{1} & \makecell{1} & \makecell{1} & \makecell{0} & \makecell{1} & \makecell{1} & \makecell{0} & \makecell{1}\\
+    \cline{3-14}
+    \multicolumn{2}{|c|}{} & \makecell{3} & \makecell{4} & \makecell{5} & \makecell{8} & \makecell{9} & \makecell{15} & \makecell{21} & \makecell{22} & \makecell{23} & \makecell{25} & \makecell{26} & \makecell{27}\\ \hline
+    & 0010X&\makecell{ }&\makecell{X}&\makecell{X}&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }\\ [-1.6ex] \hline\noalign{\vspace{\dimexpr 1.6ex-\doublerulesep}} \hline
+    & 0100X&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{X}&\makecell{X}&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }\\ [-1.6ex] \hline\noalign{\vspace{\dimexpr 1.6ex-\doublerulesep}} \hline
+    & 1011X&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{X}&\makecell{X}&\makecell{ }&\makecell{ }&\makecell{ }\\ [-1.6ex] \hline\noalign{\vspace{\dimexpr 1.6ex-\doublerulesep}} \hline
+    & 1101X&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{X}&\makecell{X}\\ [-1.6ex] \hline\noalign{\vspace{\dimexpr 1.6ex-\doublerulesep}} \hline
+    & XX0X1&\makecell{X}&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{X}&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{X}&\makecell{ }&\makecell{X}\\ [-1.6ex] \hline\noalign{\vspace{\dimexpr 1.6ex-\doublerulesep}} \hline
+    A & XXX01&\makecell{ }&\makecell{ }&\makecell{X}&\makecell{ }&\makecell{X}&\makecell{ }&\makecell{X}&\makecell{ }&\makecell{ }&\makecell{X}&\makecell{ }&\makecell{ }\\ \hline
+    B & 1XXX1&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{ }&\makecell{X}&\makecell{ }&\makecell{X}&\makecell{X}&\makecell{ }&\makecell{X}\\ \hline
+    & X1XX1&\makecell{\tikzmark{end_0}{ }}&\makecell{\tikzmark{end_1}{ }}&\makecell{\tikzmark{end_2}{ }}&\makecell{\tikzmark{end_3}{ }}&\makecell{\tikzmark{end_4}{X}}&\makecell{\tikzmark{end_5}{X}}&\makecell{\tikzmark{end_6}{ }}&\makecell{\tikzmark{end_7}{ }}&\makecell{\tikzmark{end_8}{ }}&\makecell{\tikzmark{end_9}{X}}&\makecell{\tikzmark{end_10}{ }}&\makecell{\tikzmark{end_11}{X}}\\ [-1.6ex] \hline\noalign{\vspace{\dimexpr 1.6ex-\doublerulesep}} \hline
+\end{tabular}\end{flushleft}
+\DrawVLine[black]{start_0}{end_0}
+\DrawVLine[black]{start_1}{end_1}
+\DrawVLine[black]{start_2}{end_2}
+\DrawVLine[black]{start_3}{end_3}
+\DrawVLine[black]{start_4}{end_4}
+\DrawVLine[black]{start_5}{end_5}
+\DrawVLine[black]{start_7}{end_7}
+\DrawVLine[black]{start_8}{end_8}
+\DrawVLine[black]{start_9}{end_9}
+\DrawVLine[black]{start_10}{end_10}
+\DrawVLine[black]{start_11}{end_11}
+
+Ядро покрытия:
+\[T = \begin{Bmatrix}XX0X1\\0010X\\0100X\\X1XX1\\1011X\\1101X\end{Bmatrix}\]
+
+Получим следующую упрощенную импликантную таблицу:
+\begin{flushleft}\begin{tabular}{|c|c|r*{1}{|c}|}
+    \hline \multicolumn{2}{|c|}{\multirow{7}{*}{Простые импликанты}} & \multicolumn{1}{c|}{0-кубы} \\ \cline{3-3}
+    \multicolumn{2}{|c|}{} & \makecell{\tikzmark{start_100}{1}}\\
+    \multicolumn{2}{|c|}{} & \makecell{0}\\
+    \multicolumn{2}{|c|}{} & \makecell{1}\\
+    \multicolumn{2}{|c|}{} & \makecell{0}\\
+    \multicolumn{2}{|c|}{} & \makecell{1}\\
+    \cline{3-3}
+    \multicolumn{2}{|c|}{} & \makecell{21}\\ \hline
+    A & XXX01&\makecell{X}\\ \hline
+    B & 1XXX1&\makecell{\tikzmark{end_100}{X}}\\ \hline
+\end{tabular}\end{flushleft}
+
+Метод Петрика:
+
+
+Запишем булево выражение, определяющее условие покрытия всех вершин:
+
+$Y = A \lor B$
+
+Возможны следующие покрытия:
+\begin{center}\begin{tabular}{cccc}
+$\begin{array}{c}
+C_{1} = \begin{Bmatrix} T\\ A\end{Bmatrix} = \begin{Bmatrix}XX0X1\\0010X\\0100X\\X1XX1\\1011X\\1101X\\ XXX01\end{Bmatrix} \\ \\
+S^a_{1} = 22 \\
+S^b_{1} = 29 \\ \phantom{0}
+\end{array}$
+ & $\begin{array}{c}
+C_{2} = \begin{Bmatrix} T\\ B\end{Bmatrix} = \begin{Bmatrix}XX0X1\\0010X\\0100X\\X1XX1\\1011X\\1101X\\ 1XXX1\end{Bmatrix} \\ \\
+S^a_{2} = 22 \\
+S^b_{2} = 29 \\ \phantom{0}
+\end{array}$
+\\
+\end{tabular}\end{center}
+
+Рассмотрим следующее минимальное покрытие:
+\[\begin{array}{c}
+C_{\text{min}} = \begin{Bmatrix}XX0X1\\0010X\\0100X\\X1XX1\\1011X\\1101X\\XXX01\end{Bmatrix} \\ \\
+S^a = 22 \\
+S^b = 29
+\end{array}\]
+
+Этому покрытию соответствует следующая МДНФ:
+\[f = \overline{x_{3}} \, x_{5} \lor \overline{x_{1}} \, \overline{x_{2}} \, x_{3} \, \overline{x_{4}} \lor \overline{x_{1}} \, x_{2} \, \overline{x_{3}} \, \overline{x_{4}} \lor x_{2} \, x_{5} \lor x_{1} \, \overline{x_{2}} \, x_{3} \, x_{4} \lor x_{1} \, x_{2} \, \overline{x_{3}} \, x_{4} \lor \overline{x_{4}} \, x_{5}\]
+\section*{Минимизация булевой функции на картах Карно}
+\subsection*{Определение МДНФ}
+\begin{minipage}{0.7\textwidth}
+\begin{karnaugh-map}[4][4][2][$x_4 x_5$][$x_2 x_3$][$x_1$]
+    \minterms{3, 4, 5, 8, 9, 15, 21, 22, 23, 25, 26, 27}
+    \terms{1, 11, 13, 17, 19, 29, 31}{d}
+    \implicantedge{1}{3}{9}{11}[0, 1]
+    \implicant{4}{5}[0]
+    \implicant{8}{9}[0]
+    \implicant{13}{11}[0, 1]
+    \implicant{7}{6}[1]
+    \implicant{11}{10}[1]
+    \implicant{1}{9}[0, 1]
+\end{karnaugh-map}
+\end{minipage}
+\begin{minipage}{0.3\textwidth - 5pt}\vfill
+\[\begin{array}{c}
+C_{\text{min}} = \begin{Bmatrix}XX0X1\\0010X\\0100X\\X1XX1\\1011X\\1101X\\XXX01\end{Bmatrix} \\ \\
+S^a = 22 \\
+S^b = 29
+\end{array}\]
+\vfill\end{minipage}
+\[f = \overline{x_{3}} \, x_{5} \lor \overline{x_{1}} \, \overline{x_{2}} \, x_{3} \, \overline{x_{4}} \lor \overline{x_{1}} \, x_{2} \, \overline{x_{3}} \, \overline{x_{4}} \lor x_{2} \, x_{5} \lor x_{1} \, \overline{x_{2}} \, x_{3} \, x_{4} \lor x_{1} \, x_{2} \, \overline{x_{3}} \, x_{4} \lor \overline{x_{4}} \, x_{5}\]
+\subsection*{Определение МКНФ}
+\begin{minipage}{0.7\textwidth}
+\begin{karnaugh-map}[4][4][2][$x_4 x_5$][$x_2 x_3$][$x_1$]
+    \maxterms{0, 2, 6, 7, 10, 12, 14, 16, 18, 20, 24, 28, 30}
+    \terms{1, 11, 13, 17, 19, 29, 31}{d}
+    \implicant{0}{8}[1]
+    \implicantedge{0}{0}{2}{2}[0, 1]
+    \implicant{2}{10}[0]
+    \implicantedge{12}{12}{14}{14}[0, 1]
+    \implicant{7}{6}[0]
+\end{karnaugh-map}
+\end{minipage}
+\begin{minipage}{0.3\textwidth - 5pt}\vfill
+\[\begin{array}{c}
+C_{\text{min}} = \begin{Bmatrix}1XX00\\X00X0\\0XX10\\X11X0\\0011X\end{Bmatrix} \\ \\
+S^a = 16 \\
+S^b = 21
+\end{array}\]
+\vfill\end{minipage}
+\[f = \left(\overline{x_{1}} \lor x_{4} \lor x_{5}\right) \, \left(x_{2} \lor x_{3} \lor x_{5}\right) \, \left(x_{1} \lor \overline{x_{4}} \lor x_{5}\right) \, \left(\overline{x_{2}} \lor \overline{x_{3}} \lor x_{5}\right) \, \left(x_{1} \lor x_{2} \lor \overline{x_{3}} \lor \overline{x_{4}}\right)\]
+\section*{Преобразование минимальных форм булевой функции}
+\subsection*{Факторизация и декомпозиция МДНФ}
+\begin{flalign*}\def\arraystretch{1.5}\begin{array}{lll}
+f = \overline{x_{3}} \, x_{5} \lor \overline{x_{1}} \, \overline{x_{2}} \, x_{3} \, \overline{x_{4}} \lor \overline{x_{1}} \, x_{2} \, \overline{x_{3}} \, \overline{x_{4}} \lor x_{2} \, x_{5} \lor x_{1} \, \overline{x_{2}} \, x_{3} \, x_{4} \lor x_{1} \, x_{2} \, \overline{x_{3}} \, x_{4} \lor \overline{x_{4}} \, x_{5} & S_Q = 29 & \tau = 2 \\
+f = x_{5} \, \left(x_{2} \lor \overline{x_{3}} \lor \overline{x_{4}}\right) \lor \left(\overline{x_{1}} \, \overline{x_{4}} \lor x_{1} \, x_{4}\right) \, \left(x_{2} \, \overline{x_{3}} \lor \overline{x_{2}} \, x_{3}\right) & S_Q = 21 & \tau = 4 \\
+\varphi = \overline{x_{2}} \, x_{3} \\
+\overline{\varphi} = x_{2} \lor \overline{x_{3}} \\
+f = x_{5} \, \left(\overline{\varphi} \lor \overline{x_{4}}\right) \lor \left(\overline{x_{1}} \, \overline{x_{4}} \lor x_{1} \, x_{4}\right) \, \left(x_{2} \, \overline{x_{3}} \lor \varphi\right) & S_Q = 21 & \tau = 5 \\
+\text{Декомпозиция нецелесообразна} \\
+f = x_{5} \, \left(x_{2} \lor \overline{x_{3}} \lor \overline{x_{4}}\right) \lor \left(\overline{x_{1}} \, \overline{x_{4}} \lor x_{1} \, x_{4}\right) \, \left(x_{2} \, \overline{x_{3}} \lor \overline{x_{2}} \, x_{3}\right) & S_Q = 21 & \tau = 4 \\
+\end{array}&&\end{flalign*}
+\subsection*{Факторизация и декомпозиция МКНФ}
+\begin{flalign*}\def\arraystretch{1.5}\begin{array}{lll}
+f = \left(\overline{x_{1}} \lor x_{4} \lor x_{5}\right) \, \left(x_{2} \lor x_{3} \lor x_{5}\right) \, \left(x_{1} \lor \overline{x_{4}} \lor x_{5}\right) \, \left(\overline{x_{2}} \lor \overline{x_{3}} \lor x_{5}\right) \, \left(x_{1} \lor x_{2} \lor \overline{x_{3}} \lor \overline{x_{4}}\right) & S_Q = 21 & \tau = 2 \\
+\text{Декомпозиция невозможна} \\
+f = \left(x_{1} \lor \overline{x_{4}} \lor x_{5} \, \left(x_{2} \lor \overline{x_{3}}\right)\right) \, \left(\overline{x_{1}} \lor x_{4} \lor x_{5}\right) \, \left(x_{2} \lor x_{3} \lor x_{5}\right) \, \left(\overline{x_{2}} \lor \overline{x_{3}} \lor x_{5}\right) & S_Q = 20 & \tau = 4 \\
+\end{array}&&\end{flalign*}
+\section*{Синтез комбинационных схем}
+Будем анализировать схемы на следующих наборах аргументов:
+\begin{align*}
+    f([x_1 = 0, x_2 = 0, x_3 = 0, x_4 = 0, x_5 = 0]) &= 0 \\
+    f([x_1 = 0, x_2 = 0, x_3 = 0, x_4 = 1, x_5 = 0]) &= 0 \\
+    f([x_1 = 0, x_2 = 0, x_3 = 0, x_4 = 1, x_5 = 1]) &= 1 \\
+    f([x_1 = 0, x_2 = 0, x_3 = 1, x_4 = 0, x_5 = 0]) &= 1 \\
+\end{align*}
+\subsection*{Булев базис}
+Схема по упрощенной МДНФ:
+\[f = x_{5} \, \left(x_{2} \lor \overline{x_{3}} \lor \overline{x_{4}}\right) \lor \left(\overline{x_{1}} \, \overline{x_{4}} \lor x_{1} \, x_{4}\right) \, \left(x_{2} \, \overline{x_{3}} \lor \overline{x_{2}} \, x_{3}\right)\quad(S_Q = 21, \tau = 4)\]
+\begin{center}\begin{tikzpicture}[circuit logic IEC]
+\node at (0,0) (n0) {$f$};
+\node[or gate,inputs={nn}] at (-1,0) (n1) {};
+\node[and gate,inputs={nn}] at (-2.5,-0.7166667) (n2) {};
+\node[or gate,inputs={nn}] at (-4,-1.8166666) (n3) {};
+\node[and gate,inputs={nn}] at (-5.5,-2.3666666) (n4) {};
+\node at (-7,-2.5333333) (n5) {$x_3$};
+\draw (n4.input 2) -- ++(left:2mm) |- (n5.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node at (-7,-2.1999998) (n6) {$\overline{x_2}$};
+\draw (n4.input 1) -- ++(left:2mm) |- (n6.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\draw (n3.input 2) -- ++(left:2mm) |- (n4.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node[and gate,inputs={nn}] at (-5.5,-1.2666665) (n7) {};
+\node at (-7,-1.4333333) (n8) {$\overline{x_3}$};
+\draw (n7.input 2) -- ++(left:2mm) |- (n8.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node at (-7,-1.0999999) (n9) {$x_2$};
+\draw (n7.input 1) -- ++(left:2mm) |- (n9.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n3.input 1) -- ++(left:2mm) |- (n7.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n2.input 2) -- ++(left:2mm) |- (n3.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node[or gate,inputs={nn}] at (-4,0.38333333) (n10) {};
+\node[and gate,inputs={nn}] at (-5.5,-0.16666663) (n11) {};
+\node at (-7,-0.3333333) (n12) {$x_4$};
+\draw (n11.input 2) -- ++(left:2mm) |- (n12.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0110}};
+\node at (-7,0.000000029802322) (n13) {$x_1$};
+\draw (n11.input 1) -- ++(left:2mm) |- (n13.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n10.input 2) -- ++(left:2mm) |- (n11.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\node[and gate,inputs={nn}] at (-5.5,0.9333334) (n14) {};
+\node at (-7,0.7666667) (n15) {$\overline{x_4}$};
+\draw (n14.input 2) -- ++(left:2mm) |- (n15.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1001}};
+\node at (-7,1.1) (n16) {$\overline{x_1}$};
+\draw (n14.input 1) -- ++(left:2mm) |- (n16.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\draw (n10.input 1) -- ++(left:2mm) |- (n14.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1001}};
+\draw (n2.input 1) -- ++(left:2mm) |- (n10.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1001}};
+\draw (n1.input 2) -- ++(left:2mm) |- (n2.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node[and gate,inputs={nn}] at (-2.5,2.1999998) (n17) {};
+\node[or gate,inputs={nnn}] at (-4,2.033333) (n18) {};
+\node at (-5.5,1.6999997) (n19) {$\overline{x_4}$};
+\draw (n18.input 3) -- ++(left:2mm) |- (n19.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1001}};
+\node at (-5.5,2.033333) (n20) {$\overline{x_3}$};
+\draw (n18.input 2) -- ++(left:3.5mm) |- (n20.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node at (-5.5,2.3666663) (n21) {$x_2$};
+\draw (n18.input 1) -- ++(left:2mm) |- (n21.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n17.input 2) -- ++(left:2mm) |- (n18.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node at (-4,2.75) (n22) {$x_5$};
+\draw (n17.input 1) -- ++(left:2mm) |- (n22.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0010}};
+\draw (n1.input 1) -- ++(left:2mm) |- (n17.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0010}};
+\draw (n1.output) -- ++(right:5mm) |- (n0.west) node[at start, midway, above, xshift=-2mm, yshift=-2pt]{\tiny\texttt{0011}};
+\end{tikzpicture}\end{center}
+Схема по упрощенной МКНФ:
+\[f = \left(x_{1} \lor \overline{x_{4}} \lor x_{5} \, \left(x_{2} \lor \overline{x_{3}}\right)\right) \, \left(\overline{x_{1}} \lor x_{4} \lor x_{5}\right) \, \left(x_{2} \lor x_{3} \lor x_{5}\right) \, \left(\overline{x_{2}} \lor \overline{x_{3}} \lor x_{5}\right)\quad(S_Q = 20, \tau = 4)\]
+\begin{center}\begin{tikzpicture}[circuit logic IEC]
+\node at (0,0) (n0) {$f$};
+\node[and gate,inputs={nnnn}] at (-1,0) (n1) {};
+\node[or gate,inputs={nnn}] at (-2.5,-2.1499999) (n2) {};
+\node at (-4,-2.483333) (n3) {$x_5$};
+\draw (n2.input 3) -- ++(left:2mm) |- (n3.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0010}};
+\node at (-4,-2.1499996) (n4) {$\overline{x_3}$};
+\draw (n2.input 2) -- ++(left:3.5mm) |- (n4.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node at (-4,-1.8166662) (n5) {$\overline{x_2}$};
+\draw (n2.input 1) -- ++(left:2mm) |- (n5.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\draw (n1.input 4) -- ++(left:2mm) |- (n2.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node[or gate,inputs={nnn}] at (-2.5,-1.0499998) (n6) {};
+\node at (-4,-1.3833332) (n7) {$x_5$};
+\draw (n6.input 3) -- ++(left:2mm) |- (n7.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0010}};
+\node at (-4,-1.0499998) (n8) {$x_3$};
+\draw (n6.input 2) -- ++(left:3.5mm) |- (n8.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node at (-4,-0.71666646) (n9) {$x_2$};
+\draw (n6.input 1) -- ++(left:2mm) |- (n9.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n1.input 3) -- ++(left:3.5mm) |- (n6.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0011}};
+\node[or gate,inputs={nnn}] at (-2.5,0.05000019) (n10) {};
+\node at (-4,-0.28333318) (n11) {$x_5$};
+\draw (n10.input 3) -- ++(left:2mm) |- (n11.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0010}};
+\node at (-4,0.05000016) (n12) {$x_4$};
+\draw (n10.input 2) -- ++(left:3.5mm) |- (n12.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0110}};
+\node at (-4,0.3833335) (n13) {$\overline{x_1}$};
+\draw (n10.input 1) -- ++(left:2mm) |- (n13.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\draw (n1.input 2) -- ++(left:3.5mm) |- (n10.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node[or gate,inputs={nnn}] at (-2.5,1.6500002) (n14) {};
+\node[and gate,inputs={nn}] at (-4,1.3166668) (n15) {};
+\node[or gate,inputs={nn}] at (-5.5,1.1500001) (n16) {};
+\node at (-7,0.9833334) (n17) {$\overline{x_3}$};
+\draw (n16.input 2) -- ++(left:2mm) |- (n17.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node at (-7,1.3166667) (n18) {$x_2$};
+\draw (n16.input 1) -- ++(left:2mm) |- (n18.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n15.input 2) -- ++(left:2mm) |- (n16.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node at (-5.5,1.8666668) (n19) {$x_5$};
+\draw (n15.input 1) -- ++(left:2mm) |- (n19.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0010}};
+\draw (n14.input 3) -- ++(left:2mm) |- (n15.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0010}};
+\node at (-4,2.2000003) (n20) {$\overline{x_4}$};
+\draw (n14.input 2) -- ++(left:3.5mm) |- (n20.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1001}};
+\node at (-4,2.5333338) (n21) {$x_1$};
+\draw (n14.input 1) -- ++(left:2mm) |- (n21.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n1.input 1) -- ++(left:2mm) |- (n14.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1011}};
+\draw (n1.output) -- ++(right:5mm) |- (n0.west) node[at start, midway, above, xshift=-2mm, yshift=-2pt]{\tiny\texttt{0011}};
+\end{tikzpicture}\end{center}
+\subsection*{Сокращенный булев базис (И, НЕ)}
+Схема по упрощенной МДНФ в базисе И, НЕ:
+\[f = \overline{\overline{x_{5} \, \overline{\varphi \, x_{4}}} \, \overline{\overline{\overline{\overline{x_{1}} \, \overline{x_{4}}} \, \overline{x_{1} \, x_{4}}} \, \overline{\overline{x_{2} \, \overline{x_{3}}} \, \overline{\varphi}}}}\quad(S_Q = 30, \tau = 8)\]
+\[\varphi = \overline{x_{2}} \, x_{3}\]
+\begin{center}\begin{tikzpicture}[circuit logic IEC]
+\node at (0,0) (n0) {$f$};
+\node[and gate,inputs={nn}] at (-17,0.20000005) (n1) {};
+\node at (-18.5,0.03333336) (n2) {$x_3$};
+\draw (n1.input 2) -- ++(left:2mm) |- (n2.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node at (-18.5,0.3666667) (n3) {$\overline{x_2}$};
+\draw (n1.input 1) -- ++(left:2mm) |- (n3.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node[not gate] at (-15.5,-1) (not) {};
+\node[and gate,inputs={nn}] at (-2.5,0) (n5) {};
+\node[and gate,inputs={nn}] at (-5.5,-0.7166667) (n7) {};
+\node[and gate,inputs={nn}] at (-8.5,-1.8166666) (n9) {};
+\node at (-10,-2.3666666) (n10) {$\overline{\varphi}$};
+\draw (n9.input 2) -- ++(left:2mm) |- (n10.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node[and gate,inputs={nn}] at (-11.5,-1.2666665) (n12) {};
+\node at (-13,-1.4333333) (n13) {$\overline{x_3}$};
+\draw (n12.input 2) -- ++(left:2mm) |- (n13.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node at (-13,-1.0999999) (n14) {$x_2$};
+\draw (n12.input 1) -- ++(left:2mm) |- (n14.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\node[not gate] at (-10,-1.2666665) (n11) {};
+\draw (n12.output) -- ++(right:3mm) |- (n11.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n9.input 1) -- ++(left:2mm) |- (n11.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node[not gate] at (-7,-1.8166666) (n8) {};
+\draw (n9.output) -- ++(right:3mm) |- (n8.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{1110}};
+\draw (n7.input 2) -- ++(left:2mm) |- (n8.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node[and gate,inputs={nn}] at (-8.5,0.38333333) (n16) {};
+\node[and gate,inputs={nn}] at (-11.5,-0.16666663) (n18) {};
+\node at (-13,-0.3333333) (n19) {$x_4$};
+\draw (n18.input 2) -- ++(left:2mm) |- (n19.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0110}};
+\node at (-13,0.000000029802322) (n20) {$x_1$};
+\draw (n18.input 1) -- ++(left:2mm) |- (n20.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\node[not gate] at (-10,-0.16666663) (n17) {};
+\draw (n18.output) -- ++(right:3mm) |- (n17.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n16.input 2) -- ++(left:2mm) |- (n17.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node[and gate,inputs={nn}] at (-11.5,0.9333334) (n22) {};
+\node at (-13,0.7666667) (n23) {$\overline{x_4}$};
+\draw (n22.input 2) -- ++(left:2mm) |- (n23.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1001}};
+\node at (-13,1.1) (n24) {$\overline{x_1}$};
+\draw (n22.input 1) -- ++(left:2mm) |- (n24.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node[not gate] at (-10,0.9333334) (n21) {};
+\draw (n22.output) -- ++(right:3mm) |- (n21.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{1001}};
+\draw (n16.input 1) -- ++(left:2mm) |- (n21.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0110}};
+\node[not gate] at (-7,0.38333333) (n15) {};
+\draw (n16.output) -- ++(right:3mm) |- (n15.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{0110}};
+\draw (n7.input 1) -- ++(left:2mm) |- (n15.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1001}};
+\node[not gate] at (-4,-0.7166667) (n6) {};
+\draw (n7.output) -- ++(right:3mm) |- (n6.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{0001}};
+\draw (n5.input 2) -- ++(left:2mm) |- (n6.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node[and gate,inputs={nn}] at (-5.5,2.1999998) (n26) {};
+\node[and gate,inputs={nn}] at (-8.5,2.033333) (n28) {};
+\node at (-10,1.8666664) (n29) {$x_4$};
+\draw (n28.input 2) -- ++(left:2mm) |- (n29.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0110}};
+\node at (-10,2.1999998) (n30) {$\varphi$};
+\draw (n28.input 1) -- ++(left:2mm) |- (n30.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node[not gate] at (-7,2.033333) (n27) {};
+\draw (n28.output) -- ++(right:3mm) |- (n27.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n26.input 2) -- ++(left:2mm) |- (n27.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node at (-7,2.75) (n31) {$x_5$};
+\draw (n26.input 1) -- ++(left:2mm) |- (n31.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0010}};
+\node[not gate] at (-4,2.1999998) (n25) {};
+\draw (n26.output) -- ++(right:3mm) |- (n25.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{0010}};
+\draw (n5.input 1) -- ++(left:2mm) |- (n25.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1101}};
+\node[not gate] at (-1,0) (n4) {};
+\draw (n5.output) -- ++(right:3mm) |- (n4.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{1100}};
+\node[circle, fill=black, inner sep=0pt, minimum size=3pt] (c0) at (-16.19,0.20000005) {};
+\draw (n1.output) -- (c0) node[at start, midway, above, xshift=0.2mm, yshift=-2pt]{\tiny\texttt{0001}};
+\draw (c0) |- (not.input);
+\draw (not.output) -- (-13.8,-1) node[near start, midway, above, xshift=-4mm, yshift=-2pt]{\tiny\texttt{0001}};
+\draw (c0) -- (-14,0.20000005);
+\draw (-14,2.1999998) -- (n30.west);
+\draw (-14,0.20000005) -- (-14, 2.1999998);
+\draw (-13.8,-2.3666666) -- (n10.west);
+\draw (-13.8,-2.3666666) -- (-13.8, -1);
+\draw (n4.output) -- ++(right:5mm) |- (n0.west) node[at start, midway, above, xshift=-2mm, yshift=-2pt]{\tiny\texttt{0011}};
+\end{tikzpicture}\end{center}
+Схема по упрощенной МКНФ в базисе И, НЕ:
+\[f = \overline{\overline{x_{1}} \, x_{4} \, \overline{x_{5} \, \overline{\overline{x_{2}} \, x_{3}}}} \, \overline{x_{1} \, \overline{x_{4}} \, \overline{x_{5}}} \, \overline{\overline{x_{2}} \, \overline{x_{3}} \, \overline{x_{5}}} \, \overline{x_{2} \, x_{3} \, \overline{x_{5}}}\quad(S_Q = 26, \tau = 7)\]
+\begin{center}\begin{tikzpicture}[circuit logic IEC]
+\node at (0,0) (n0) {$f$};
+\node[and gate,inputs={nnnn}] at (-1,0) (n1) {};
+\node[and gate,inputs={nnn}] at (-4,-2.1499999) (n3) {};
+\node at (-5.5,-2.483333) (n4) {$\overline{x_5}$};
+\draw (n3.input 3) -- ++(left:2mm) |- (n4.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1101}};
+\node at (-5.5,-2.1499996) (n5) {$x_3$};
+\draw (n3.input 2) -- ++(left:3.5mm) |- (n5.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node at (-5.5,-1.8166662) (n6) {$x_2$};
+\draw (n3.input 1) -- ++(left:2mm) |- (n6.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\node[not gate] at (-2.5,-2.1499999) (n2) {};
+\draw (n3.output) -- ++(right:3mm) |- (n2.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n1.input 4) -- ++(left:2mm) |- (n2.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node[and gate,inputs={nnn}] at (-4,-1.0499998) (n8) {};
+\node at (-5.5,-1.3833332) (n9) {$\overline{x_5}$};
+\draw (n8.input 3) -- ++(left:2mm) |- (n9.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1101}};
+\node at (-5.5,-1.0499998) (n10) {$\overline{x_3}$};
+\draw (n8.input 2) -- ++(left:3.5mm) |- (n10.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node at (-5.5,-0.71666646) (n11) {$\overline{x_2}$};
+\draw (n8.input 1) -- ++(left:2mm) |- (n11.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node[not gate] at (-2.5,-1.0499998) (n7) {};
+\draw (n8.output) -- ++(right:3mm) |- (n7.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{1100}};
+\draw (n1.input 3) -- ++(left:3.5mm) |- (n7.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0011}};
+\node[and gate,inputs={nnn}] at (-4,0.05000019) (n13) {};
+\node at (-5.5,-0.28333318) (n14) {$\overline{x_5}$};
+\draw (n13.input 3) -- ++(left:2mm) |- (n14.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1101}};
+\node at (-5.5,0.05000016) (n15) {$\overline{x_4}$};
+\draw (n13.input 2) -- ++(left:3.5mm) |- (n15.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1001}};
+\node at (-5.5,0.3833335) (n16) {$x_1$};
+\draw (n13.input 1) -- ++(left:2mm) |- (n16.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\node[not gate] at (-2.5,0.05000019) (n12) {};
+\draw (n13.output) -- ++(right:3mm) |- (n12.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n1.input 2) -- ++(left:3.5mm) |- (n12.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node[and gate,inputs={nnn}] at (-4,1.6500002) (n18) {};
+\node[and gate,inputs={nn}] at (-7,1.3166668) (n20) {};
+\node[and gate,inputs={nn}] at (-10,1.1500001) (n22) {};
+\node at (-11.5,0.9833334) (n23) {$x_3$};
+\draw (n22.input 2) -- ++(left:2mm) |- (n23.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node at (-11.5,1.3166667) (n24) {$\overline{x_2}$};
+\draw (n22.input 1) -- ++(left:2mm) |- (n24.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node[not gate] at (-8.5,1.1500001) (n21) {};
+\draw (n22.output) -- ++(right:3mm) |- (n21.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{0001}};
+\draw (n20.input 2) -- ++(left:2mm) |- (n21.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node at (-8.5,1.8666668) (n25) {$x_5$};
+\draw (n20.input 1) -- ++(left:2mm) |- (n25.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0010}};
+\node[not gate] at (-5.5,1.3166668) (n19) {};
+\draw (n20.output) -- ++(right:3mm) |- (n19.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{0010}};
+\draw (n18.input 3) -- ++(left:2mm) |- (n19.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1101}};
+\node at (-5.5,2.2000003) (n26) {$x_4$};
+\draw (n18.input 2) -- ++(left:3.5mm) |- (n26.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0110}};
+\node at (-5.5,2.5333338) (n27) {$\overline{x_1}$};
+\draw (n18.input 1) -- ++(left:2mm) |- (n27.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node[not gate] at (-2.5,1.6500002) (n17) {};
+\draw (n18.output) -- ++(right:3mm) |- (n17.west) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{0100}};
+\draw (n1.input 1) -- ++(left:2mm) |- (n17.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1011}};
+\draw (n1.output) -- ++(right:5mm) |- (n0.west) node[at start, midway, above, xshift=-2mm, yshift=-2pt]{\tiny\texttt{0011}};
+\end{tikzpicture}\end{center}
+\subsection*{Универсальный базис (И-НЕ, 2 входа)}
+Схема по упрощенной МДНФ в базисе И-НЕ с ограничением на число входов:
+\[f = \overline{\overline{x_{5} \, \overline{\overline{x_{2}} \, \overline{\overline{x_{3} \, x_{4}}}}} \, \overline{\overline{\overline{\overline{x_{1}} \, \overline{x_{4}}} \, \overline{x_{1} \, x_{4}}} \, \overline{\overline{x_{2} \, \overline{x_{3}}} \, \overline{\overline{x_{2}} \, x_{3}}}}}\quad(S_Q = 24, \tau = 5)\]
+\begin{center}\begin{tikzpicture}[circuit logic IEC]
+\node at (0,0) (n0) {$f$};
+\node[nand gate,inputs={nn}] at (-1,0) (n1) {};
+\node[nand gate,inputs={nn}] at (-2.5,-0.88333344) (n2) {};
+\node[nand gate,inputs={nn}] at (-4,-1.9833333) (n3) {};
+\node[nand gate,inputs={nn}] at (-5.5,-2.5333333) (n4) {};
+\node at (-7,-2.6999998) (n5) {$x_3$};
+\draw (n4.input 2) -- ++(left:2mm) |- (n5.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node at (-7,-2.3666663) (n6) {$\overline{x_2}$};
+\draw (n4.input 1) -- ++(left:2mm) |- (n6.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\draw (n3.input 2) -- ++(left:2mm) |- (n4.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node[nand gate,inputs={nn}] at (-5.5,-1.4333333) (n7) {};
+\node at (-7,-1.6) (n8) {$\overline{x_3}$};
+\draw (n7.input 2) -- ++(left:2mm) |- (n8.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node at (-7,-1.2666667) (n9) {$x_2$};
+\draw (n7.input 1) -- ++(left:2mm) |- (n9.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n3.input 1) -- ++(left:2mm) |- (n7.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\draw (n2.input 2) -- ++(left:2mm) |- (n3.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node[nand gate,inputs={nn}] at (-4,0.21666658) (n10) {};
+\node[nand gate,inputs={nn}] at (-5.5,-0.33333337) (n11) {};
+\node at (-7,-0.50000006) (n12) {$x_4$};
+\draw (n11.input 2) -- ++(left:2mm) |- (n12.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0110}};
+\node at (-7,-0.16666672) (n13) {$x_1$};
+\draw (n11.input 1) -- ++(left:2mm) |- (n13.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n10.input 2) -- ++(left:2mm) |- (n11.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node[nand gate,inputs={nn}] at (-5.5,0.76666665) (n14) {};
+\node at (-7,0.59999996) (n15) {$\overline{x_4}$};
+\draw (n14.input 2) -- ++(left:2mm) |- (n15.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1001}};
+\node at (-7,0.9333333) (n16) {$\overline{x_1}$};
+\draw (n14.input 1) -- ++(left:2mm) |- (n16.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\draw (n10.input 1) -- ++(left:2mm) |- (n14.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0110}};
+\draw (n2.input 1) -- ++(left:2mm) |- (n10.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1001}};
+\draw (n1.input 2) -- ++(left:2mm) |- (n2.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node[nand gate,inputs={nn}] at (-2.5,2.1999998) (n17) {};
+\node[nand gate,inputs={nn}] at (-4,2.033333) (n18) {};
+\node[nand gate,inputs={nn}] at (-7,1.8666663) (n20) {};
+\node at (-8.5,1.6999997) (n21) {$x_4$};
+\draw (n20.input 2) -- ++(left:2mm) |- (n21.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0110}};
+\node at (-8.5,2.033333) (n22) {$x_3$};
+\draw (n20.input 1) -- ++(left:2mm) |- (n22.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node[nand gate] at (-5.5,1.8666663) (n19) {};
+\node[circle, fill=black, inner sep=0pt, minimum size=3pt] (n23) at (-6,1.8666663) {};
+\draw (n23) |- (n19.input 1);
+\draw (n23) |- (n19.input 2);
+\draw (n20.output) -- ++(right:3mm) |- (n23) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{1111}};
+\draw (n18.input 2) -- ++(left:2mm) |- (n19.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\node at (-5.5,2.583333) (n24) {$\overline{x_2}$};
+\draw (n18.input 1) -- ++(left:2mm) |- (n24.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\draw (n17.input 2) -- ++(left:2mm) |- (n18.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node at (-4,2.9166665) (n25) {$x_5$};
+\draw (n17.input 1) -- ++(left:2mm) |- (n25.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0010}};
+\draw (n1.input 1) -- ++(left:2mm) |- (n17.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1101}};
+\draw (n1.output) -- ++(right:5mm) |- (n0.west) node[at start, midway, above, xshift=-2mm, yshift=-2pt]{\tiny\texttt{0011}};
+\end{tikzpicture}\end{center}
+Схема по упрощенной МКНФ в базисе И-НЕ с ограничением на число входов:
+\[f = \overline{\overline{\overline{\overline{x_{5}} \, \overline{\overline{x_{1} \, \overline{x_{4}}} \, \overline{\overline{\overline{\overline{x_{2}} \, \overline{x_{3}}} \, \overline{x_{2} \, x_{3}}}}}} \, \overline{\overline{x_{1}} \, \overline{\overline{x_{4} \, \overline{x_{5} \, \overline{\overline{x_{2}} \, x_{3}}}}}}}}\quad(S_Q = 28, \tau = 7)\]
+\begin{center}\begin{tikzpicture}[circuit logic IEC]
+\node at (0,0) (n0) {$f$};
+\node[nand gate,inputs={nn}] at (-2.5,0) (n2) {};
+\node[nand gate,inputs={nn}] at (-4,-1.8166666) (n3) {};
+\node[nand gate,inputs={nn}] at (-7,-1.9833332) (n5) {};
+\node[nand gate,inputs={nn}] at (-8.5,-2.1499999) (n6) {};
+\node[nand gate,inputs={nn}] at (-10,-2.3166666) (n7) {};
+\node at (-11.5,-2.483333) (n8) {$x_3$};
+\draw (n7.input 2) -- ++(left:2mm) |- (n8.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node at (-11.5,-2.1499996) (n9) {$\overline{x_2}$};
+\draw (n7.input 1) -- ++(left:2mm) |- (n9.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\draw (n6.input 2) -- ++(left:2mm) |- (n7.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node at (-10,-1.5999999) (n10) {$x_5$};
+\draw (n6.input 1) -- ++(left:2mm) |- (n10.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0010}};
+\draw (n5.input 2) -- ++(left:2mm) |- (n6.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1101}};
+\node at (-8.5,-1.2666665) (n11) {$x_4$};
+\draw (n5.input 1) -- ++(left:2mm) |- (n11.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0110}};
+\node[nand gate] at (-5.5,-1.9833332) (n4) {};
+\node[circle, fill=black, inner sep=0pt, minimum size=3pt] (n12) at (-6,-1.9833332) {};
+\draw (n12) |- (n4.input 1);
+\draw (n12) |- (n4.input 2);
+\draw (n5.output) -- ++(right:3mm) |- (n12) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{1011}};
+\draw (n3.input 2) -- ++(left:2mm) |- (n4.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0100}};
+\node at (-5.5,-0.93333316) (n13) {$\overline{x_1}$};
+\draw (n3.input 1) -- ++(left:2mm) |- (n13.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\draw (n2.input 2) -- ++(left:2mm) |- (n3.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1011}};
+\node[nand gate,inputs={nn}] at (-4,1.05) (n14) {};
+\node[nand gate,inputs={nn}] at (-5.5,0.8833333) (n15) {};
+\node[nand gate,inputs={nn}] at (-8.5,0.33333337) (n17) {};
+\node[nand gate,inputs={nn}] at (-10,-0.21666658) (n18) {};
+\node at (-11.5,-0.38333327) (n19) {$x_3$};
+\draw (n18.input 2) -- ++(left:2mm) |- (n19.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node at (-11.5,-0.049999923) (n20) {$x_2$};
+\draw (n18.input 1) -- ++(left:2mm) |- (n20.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n17.input 2) -- ++(left:2mm) |- (n18.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\node[nand gate,inputs={nn}] at (-10,0.88333344) (n21) {};
+\node at (-11.5,0.71666676) (n22) {$\overline{x_3}$};
+\draw (n21.input 2) -- ++(left:2mm) |- (n22.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node at (-11.5,1.0500001) (n23) {$\overline{x_2}$};
+\draw (n21.input 1) -- ++(left:2mm) |- (n23.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\draw (n17.input 1) -- ++(left:2mm) |- (n21.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node[nand gate] at (-7,0.33333337) (n16) {};
+\node[circle, fill=black, inner sep=0pt, minimum size=3pt] (n24) at (-7.5,0.33333337) {};
+\draw (n24) |- (n16.input 1);
+\draw (n24) |- (n16.input 2);
+\draw (n17.output) -- ++(right:3mm) |- (n24) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{1110}};
+\draw (n15.input 2) -- ++(left:2mm) |- (n16.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0001}};
+\node[nand gate,inputs={nn}] at (-7,1.9833333) (n25) {};
+\node at (-8.5,1.8166667) (n26) {$\overline{x_4}$};
+\draw (n25.input 2) -- ++(left:2mm) |- (n26.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1001}};
+\node at (-8.5,2.15) (n27) {$x_1$};
+\draw (n25.input 1) -- ++(left:2mm) |- (n27.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0000}};
+\draw (n15.input 1) -- ++(left:2mm) |- (n25.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1111}};
+\draw (n14.input 2) -- ++(left:2mm) |- (n15.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1110}};
+\node at (-5.5,2.6999998) (n28) {$\overline{x_5}$};
+\draw (n14.input 1) -- ++(left:2mm) |- (n28.east) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{1101}};
+\draw (n2.input 1) -- ++(left:2mm) |- (n14.output) node[at end, above, xshift=2.0mm, yshift=-2pt]{\tiny\texttt{0011}};
+\node[nand gate] at (-1,0) (n1) {};
+\node[circle, fill=black, inner sep=0pt, minimum size=3pt] (n29) at (-1.5,0) {};
+\draw (n29) |- (n1.input 1);
+\draw (n29) |- (n1.input 2);
+\draw (n2.output) -- ++(right:3mm) |- (n29) node[at start, above, xshift=-0.3mm, yshift=-2pt]{\tiny\texttt{1100}};
+\draw (n1.output) -- ++(right:5mm) |- (n0.west) node[at start, midway, above, xshift=-2mm, yshift=-2pt]{\tiny\texttt{0011}};
+\end{tikzpicture}\end{center}
+
+\end{document}

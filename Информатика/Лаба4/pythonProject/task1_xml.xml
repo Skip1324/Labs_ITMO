@@ -1,0 +1,32 @@
+<?xml version= "1.0" encoding="UTF8" ?> 
+<timetable>
+  <day>Tuesday</day>
+  <group>P3111</group>
+  <lang>ru</lang>
+  <lessons>
+    <lesson1>
+      <format>Очно-дистанционный</format>
+      <lesson>информатика (лекция)</lesson>
+      <place>ул.Ломоносова, д.9, лит. М</place>
+      <room>Актовый зал.</room>
+      <teacher>Балакшин Павел Валерьевич</teacher>
+      <time>08:20-09:50</time>
+    </lesson1>
+    <lesson2>
+      <format>Очно-дистанционный</format>
+      <lesson>Основы профессиональной деятельности (лекция)</lesson>
+      <place>ул.Ломоносова, д.9, лит. М</place>
+      <room>Актовый зал.</room>
+      <teacher>Клименков Сергей Викторович</teacher>
+      <time>10:0-11:30</time>
+    </lesson2>
+    <lesson3>
+      <format>Очно-дистанционный</format>
+      <lesson>Програмирование (лекция)</lesson>
+      <place>ул.Ломоносова, д.9, лит. М</place>
+      <room>1223 ауд.</room>
+      <teacher>Письмак Алексей Евгеньевич</teacher>
+      <time>11:40-13:10</time>
+    </lesson3>
+  </lessons>
+</timetable>

@@ -1,0 +1,180 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{graphicx}
+\usepackage[letterpaper,top=1.5cm,bottom=2cm,left=3cm,right=3cm]{geometry}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage{wrapfig}
+\begin{document}
+\thispagestyle{empty}
+\begin{multicols*}{2} 
+\hspace{10mm} \Large КНИГА I ПРЕДЛ.XXV.ТЕОРЕМА \qquad \normalsize \\ 
+\begin{wrapfigure}{l}{0.15\textwidth}
+    \includegraphics[width=0.15\textwidth]{pom.png}
+\end{wrapfigure}
+\begin{textit}
+    
+сли у двух треугольников две стороны
+\tikz{
+\draw[line width = 0.8 mm,blue] (0,0)  -- node[above] {\color{black}$A$} (0,0) -- (1.2,0) node[above] {\color{black}$B$} ;
+}
+и 
+\tikz{
+\draw[line width = 0.8 mm,red] (0,0)  -- node[above] {\color{black}$C$} (0,0) -- (1.2,0) node[above] {\color{black}$A$} ;
+}
+соответственно равны двум сторонам
+\tikz{
+\draw[blue] (0,0)  -- node[above] {\color{black}$D$} (0,0) -- (1.2,0) node[above] {\color{black}$E$} ;
+}
+и
+\tikz{
+\draw[red] (0,0)  -- node[above] {\color{black}$F$} (0,0) -- (1.2,0) node[above] {\color{black}$D$} ;
+}
+другого, но основания неравны, то угол над большим основанием
+\tikz{
+\draw[line width = 0.8 mm] (0,0)  -- node[above] {$B$} (0,0) -- (1.2,0) node[above] {$C$} ;
+}
+одного треугольника меньше угла под меньшим
+\tikz{
+\draw[orange] (0,0)  -- node[above] {\color{black}$E$} (0,0) -- (1.2,0) node[above] {\color{black}$F$} ;
+}
+другого.
+
+\vspace{1cm}
+\centering
+\hspace*{-4em}\raisebox{-1em}{\begin{tikzpicture}
+\fill[color = orange]  (0,0) node[above] {\tiny\color{black}$A$} -- (-0.24,-0.5) node[below]
+{\tiny\color{black}$C$} -- (0.16,-0.5) node[below] {\tiny\color{black}$B$} --  (-0.24,-0.5) arc (-120:-60:0.4);
+\end{tikzpicture}}
+\end{textit}
+\textbf{= , >} или \textbf{<}
+\hspace*{-0em}\raisebox{-1.2em}{\begin{tikzpicture}
+\fill[color = black]  (0,0) node[above] {\tiny\color{black}$D$} -- (-0.2,-0.5) node[below]
+{\tiny\color{black}$F$} -- (0.08,-0.5) node[below] {\tiny\color{black}$E$} --(-0.2,-0.5) arc (-140:-45:0.2);;
+\end{tikzpicture}}
+
+\centering
+\hspace*{-4em}\raisebox{-1em}{\begin{tikzpicture}
+\fill[color = orange]  (0,0) node[above] {\tiny\color{black}$A$} -- (-0.24,-0.5) node[below]
+{\tiny\color{black}$C$} -- (0.16,-0.5) node[below] {\tiny\color{black}$B$} --  (-0.24,-0.5) arc (-120:-60:0.4);
+\end{tikzpicture}}
+не равен
+\raisebox{-1.2em}{\begin{tikzpicture}
+\fill[color = black]  (0,0) node[above] {\tiny\color{black}$D$} -- (-0.2,-0.5) node[below]
+{\tiny\color{black}$F$} -- (0.08,-0.5) node[below] {\tiny\color{black}$E$} --(-0.2,-0.5) arc (-140:-45:0.2);;
+\end{tikzpicture}}
+\textbf{,}
+
+поскольку если
+\raisebox{-1em}{\begin{tikzpicture}
+\fill[color = orange]  (0,0) node[above] {\tiny\color{black}$A$} -- (-0.24,-0.5) node[below]
+{\tiny\color{black}$C$} -- (0.16,-0.5) node[below] {\tiny\color{black}$B$} --  (-0.24,-0.5) arc (-120:-60:0.4);
+\end{tikzpicture}}
+\textbf{=}
+\raisebox{-1.2em}{\begin{tikzpicture}
+\fill[color = black]  (0,0) node[above] {\tiny\color{black}$D$} -- (-0.2,-0.5) node[below]
+{\tiny\color{black}$F$} -- (0.08,-0.5) node[below] {\tiny\color{black}$E$} --(-0.2,-0.5) arc (-140:-45:0.2);;
+\end{tikzpicture}}
+\textbf{,} то
+
+\tikz{
+\draw[line width = 0.8 mm] (0,0)  -- node[above] {$C$} (0,0) -- (1.2,0) node[above] {$B$} ;
+}
+\textbf{=}
+\tikz{
+\draw[orange] (0,0)  -- node[above] {\color{black}$F$} (0,0) -- (1.2,0) node[above] {\color{black}$E$} ;
+}
+(пр. I.\scriptsize 4\normalsize ) \textbf{,}
+
+что противоречит гипотезе;
+\vspace{1 cm}
+
+\raisebox{-1em}{\begin{tikzpicture}
+\fill[color = orange]  (0,0) node[above] {\tiny\color{black}$A$} -- (-0.24,-0.5) node[below]
+{\tiny\color{black}$C$} -- (0.16,-0.5) node[below] {\tiny\color{black}$B$} --  (-0.24,-0.5) arc (-120:-60:0.4);
+\end{tikzpicture}}
+не меньше
+\raisebox{-1.2em}{\begin{tikzpicture}
+\fill[color = black]  (0,0) node[above] {\tiny\color{black}$D$} -- (-0.2,-0.5) node[below]
+{\tiny\color{black}$F$} -- (0.08,-0.5) node[below] {\tiny\color{black}$E$} --(-0.2,-0.5) arc (-140:-45:0.2);;
+\end{tikzpicture}}
+\textbf{,}
+
+поскольку если
+\raisebox{-1em}{\begin{tikzpicture}
+\fill[color = orange]  (0,0) node[above] {\tiny\color{black}$A$} -- (-0.24,-0.5) node[below]
+{\tiny\color{black}$C$} -- (0.16,-0.5) node[below] {\tiny\color{black}$B$} --  (-0.24,-0.5) arc (-120:-60:0.4);
+\end{tikzpicture}}
+\textbf{<}
+\raisebox{-1.2em}{\begin{tikzpicture}
+\fill[color = black]  (0,0) node[above] {\tiny\color{black}$D$} -- (-0.2,-0.5) node[below]
+{\tiny\color{black}$F$} -- (0.08,-0.5) node[below] {\tiny\color{black}$E$} --(-0.2,-0.5) arc (-140:-45:0.2);;
+\end{tikzpicture}}
+\textbf{,}
+
+то
+\tikz{
+\draw[line width = 0.8 mm] (0,0)  -- node[above] {$C$} (0,0) -- (1.2,0) node[above] {$B$} ;
+}
+\textbf{<}
+\tikz{
+\draw[orange] (0,0)  -- node[above] {\color{black}$F$} (0,0) -- (1.2,0) node[above] {\color{black}$E$} ;
+}
+(пр. I.\scriptsize 24\normalsize ) \textbf{,}
+
+что противоречит гипотезе.
+
+\(\therefore\)
+\raisebox{-1em}{\begin{tikzpicture}
+\fill[color = orange]  (0,0) node[above] {\tiny\color{black}$A$} -- (-0.24,-0.5) node[below]
+{\tiny\color{black}$C$} -- (0.16,-0.5) node[below] {\tiny\color{black}$B$} --  (-0.24,-0.5) arc (-120:-60:0.4);
+\end{tikzpicture}}
+\textbf{>}
+\raisebox{-1.1em}{\begin{tikzpicture}
+\fill[color = black]  (0,0) node[above] {\tiny\color{black}$D$} -- (-0.2,-0.5) node[below]
+{\tiny\color{black}$F$} -- (0.08,-0.5) node[below] {\tiny\color{black}$E$} --(-0.2,-0.5) arc (-140:-45:0.2);;
+\end{tikzpicture}}
+\textbf{. }
+\textbf{ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ч.т.д}\\
+\raisebox{-1em}{\begin{tikzpicture}
+\fill[color = orange]  (0,0) node[above] {\tiny\color{black}} -- (-0.24,-0.5) node[below]
+{\tiny\color{black}} -- (0.16,-0.5) node[below] {\tiny\color{black}} --  (-0.24,-0.5) arc (-120:-60:0.4);
+\draw  [very thick, blue](0,0)node[above, black] {$A$}  -- (1.7,-4.3)
+node[below, black] {$B$}; 
+\draw  [very thick, black](1.7,-4.3) --(-2,-5)
+node[below left, black] {$C$};
+\draw  [very thick, red](0,0) -- (-2,-5);
+\end{tikzpicture}}
+
+\raisebox{-1.2em}{\begin{tikzpicture}
+\fill[color = black]  (0,0) node[above] {\tiny\color{black}} -- (-0.2,-0.5) node[below]
+{\tiny\color{black}} -- (0.08,-0.5) node[below] {\tiny\color{black}} --(-0.2,-0.5) arc (-140:-45:0.2);
+\draw[very thick, blue](0,0)node[above, black] {$E$}  -- (0.9,-4)
+node[below, black] {$D$}; 
+\draw[very thick, orange](0.9,-4) --(-2,-5)
+node[below left, black] {$F$};
+\draw[very thick, red](0,0) -- (-2,-5);
+\end{tikzpicture}}
+\end{multicols*}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
