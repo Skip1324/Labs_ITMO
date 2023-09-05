@@ -135,19 +135,6 @@ DROP TABLE Break CASCADE;
 DROP TABlE Bridges CASCADE;
 DROP TABlE Crossing CASCADE;
 
-
-CREATE FUNCTION check_crossing() RETURNS TRIGGER AS $$
-DECLARE
-    bridge_size int;
-BEGIN
-    SELECT size INTO bridge_size FROM Bridges WHERE bridges_id = NEW.fk_bridges;
-    IF EXISTS(SELECT 1 FROM Crossing WHERE fk_river_id = NEW.fk_river_id AND fk_bridges <> NEW.fk_bridges AND fk_bridges IN (SELECT bridges_id FROM Bridges WHERE size = bridge_size)) THEN
-        DELETE FROM Bridges WHERE bridges_id = NEW.fk_bridges;
-        RAISE NOTICE 'Bridge crossing river with same size already exists. Deleting bridge %.', NEW.fk_bridges;
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
 -- SELECT *
 -- FROM Human;
 -- SELECT *
