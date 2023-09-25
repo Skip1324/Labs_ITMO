@@ -1,1 +1,1 @@
-*.3 linguist-language=text
+*.\d* linguist-language=text
